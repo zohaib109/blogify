@@ -10,7 +10,7 @@ import homeRouter from "./routes/home.js";
 import checkForAuthCookie from "./middlewares/authentication.js";
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8200;
 
 const connectDB = async () => {
   try {
