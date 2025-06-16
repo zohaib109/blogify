@@ -34,11 +34,22 @@ userRouter.post("/signin", async (req, res) => {
 
 userRouter.post("/signup", async (req, res) => {
   const { fullName, email, password } = req.body;
-  await usersCollection.create({
-    fullName,
-    email,
-    password,
-  });
+
+  try {
+    await usersCollection.create({
+      fullName,
+      email,
+      password,
+    });
+
+    const token = await usersCollection.matchPasswordAndGenerateToken(email, password);
+
+    return res.cookie("token", token).redirect("/");
+  } catch (error) {
+    return res.render("signup", {
+      error: "Error creating account"
+    })
+  }
   return res.redirect("/");
 });
 

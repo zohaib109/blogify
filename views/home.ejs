@@ -1,30 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include("partials/head") %>
+
+<head>
+  <%- include("partials/head") %>
     <title>Homepage</title>
-  </head>
+    <style>
+      body {
+        background: #f7f8fa;
+        font-family: 'Segoe UI', Arial, sans-serif;
+      }
 
-  <body>
-    <%- include("partials/nav") %>
+      .blogs-wrapper {
+        max-width: 1100px;
+        margin: 40px auto 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+      }
 
-    <div class="container mt-3 row row-cols-3">
-      <% blogs.forEach(blog => { %>
-      <div class="col">
-        <div class="card col" style="width: 18rem">
-          <img
-            src="<%= blog.coverImageURL %>"
-            class="card-img-top"
-            alt="Blog Cover Image"
-          />
+      .card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        width: 320px;
+        margin-bottom: 24px;
+        display: flex;
+        flex-direction: column;
+        transition: box-shadow 0.2s;
+        border: none;
+      }
+
+      .card:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      }
+
+      .card-img-top {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+
+      .card-body {
+        padding: 18px 18px 16px 18px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #222;
+      }
+
+      .btn-primary {
+        width: 100%;
+        font-size: 1rem;
+        padding: 8px 0;
+        border-radius: 5px;
+      }
+
+      @media (max-width: 700px) {
+        .blogs-wrapper {
+          gap: 16px;
+        }
+
+        .card {
+          width: 95vw;
+        }
+      }
+    </style>
+</head>
+
+<body>
+  <%- include("partials/nav") %>
+
+    <div class="blogs-wrapper">
+      <% blogs.forEach(blog=> { %>
+        <div class="card">
+          <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="Blog Cover Image" />
           <div class="card-body">
-            <h5 class="card-title"><%= blog.title %></h5>
+            <div>
+              <h5 class="card-title">
+                <%= blog.title %>
+              </h5>
+            </div>
             <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
           </div>
         </div>
-      </div>
-      <% }) %>
+        <% }) %>
     </div>
     <%- include("partials/scripts") %>
-  </body>
+</body>
+
 </html>
