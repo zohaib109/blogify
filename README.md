@@ -1,6 +1,6 @@
 # Simple Blog App
 
-A clean and modern blogging application built with Node.js, Express, and MongoDB. This application allows users to create, read, update, and delete blog posts, along with features like user authentication, comments, and profile management.
+A simple blogging application built with Node.js, Express, and MongoDB. This application allows users to create, read, update, and delete blog posts, along with features like user authentication, comments, and profile management.
 
 ## Features
 
