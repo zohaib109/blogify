@@ -1,56 +1,22 @@
 import { Router } from "express";
-import usersCollection from "../models/user.js";
+import {
+  renderSignin,
+  renderSignup,
+  logoutUser,
+  signinUser,
+  signupUser,
+} from "../controllers/user.js";
 
 const userRouter = Router();
 
-userRouter.get("/signin", (req, res) => {
-  return res.render("signin");
-});
+userRouter.get("/signin", renderSignin);
 
-userRouter.get("/signup", (req, res) => {
-  return res.render("signup");
-});
+userRouter.get("/signup", renderSignup);
 
-userRouter.get("/logout", (req, res) => {
-  return res.clearCookie("token").redirect("/");
-});
+userRouter.get("/logout", logoutUser);
 
-userRouter.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
+userRouter.post("/signin", signinUser);
 
-  try {
-    const token = await usersCollection.matchPasswordAndGenerateToken(
-      email,
-      password
-    );
-
-    return res.cookie("token", token).redirect("/");
-  } catch (error) {
-    return res.render("signin", {
-      error: "Incorrect Email or Password",
-    });
-  }
-});
-
-userRouter.post("/signup", async (req, res) => {
-  const { fullName, email, password } = req.body;
-
-  try {
-    await usersCollection.create({
-      fullName,
-      email,
-      password,
-    });
-
-    const token = await usersCollection.matchPasswordAndGenerateToken(email, password);
-
-    return res.cookie("token", token).redirect("/");
-  } catch (error) {
-    return res.render("signup", {
-      error: "Error creating account"
-    })
-  }
-  return res.redirect("/");
-});
+userRouter.post("/signup", signupUser);
 
 export default userRouter;
